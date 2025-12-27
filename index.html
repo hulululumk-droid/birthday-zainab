@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>💌 A Little Surprise</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffd6e8, #fff1f7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+  }
+
+  .card {
+    width: 300px;
+    min-height: 200px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+    cursor: pointer;
+    animation: fadeIn 1s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  h1, h2 {
+    margin: 10px 0;
+    color: #ff4f87;
+  }
+
+  p {
+    color: #444;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .emoji {
+    font-size: 45px;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .star {
+    position: absolute;
+    animation: float 4s linear infinite;
+    opacity: 0.8;
+  }
+
+  @keyframes float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-10vh); }
+  }
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4f3b6bfe30.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card" id="card" onclick="nextStep()">
+  <div>
+    <div class="emoji">💌</div>
+    <p><b>Click me</b></p>
+  </div>
+</div>
+
+<div class="stars" id="stars"></div>
+
+<script>
+let step = 0;
+const card = document.getElementById("card");
+const music = document.getElementById("bgMusic");
+
+function nextStep() {
+  if (step === 0) {
+    // First click → start music + suspense hint
+    music.play();
+    card.innerHTML = `
+      <div>
+        <p>Hmm… 👀</p>
+        <p>Just a little more magic ✨</p>
+        <p><b>Click again</b></p>
+      </div>`;
+  }
+
+  else if (step === 1) {
+    // Second click → more suspense
+    card.innerHTML = `
+      <div>
+        <p>Almost there… 😌</p>
+        <p>One more click for the big surprise 💖</p>
+        <p><b>Click once more</b></p>
+      </div>`;
+  }
+
+  else if (step === 2) {
+    // Third click → Birthday message + Dua
+    card.innerHTML = `
+      <div>
+        <h1>🎉 Happy Birthday 🎉</h1>
+        <h2>Waqeel Sahiba 💖</h2>
+
+        <p>
+          Today is special because someone incredibly special was born ✨  
+          May your days always be filled with light, laughter, and love 🌸
+        </p>
+
+        <p style="font-style: italic; font-size:14px;">
+          May Allah bless you with all the happiness this world has to offer,  
+          keep you smiling always, protect your heart,  
+          and grant you success, peace, and beautiful surprises in life 🤍
+        </p>
+
+        <p>Stay magical. Always. 💫</p>
+
+        <p style="margin-top:15px;"><b>Click for a little extra… 😋</b></p>
+      </div>`;
+  }
+
+  else if (step === 3) {
+    // Fourth click → Treat message
+    card.innerHTML = `
+      <div>
+        <h2>Ab meri treat? 😋</h2>
+        <p>Same vibes, same magic 💕</p>
+        <p>Hope you smile as much as you make everyone smile ✨</p>
+      </div>`;
+  }
+
+  step++;
+}
+
+// stars effect
+const stars = document.getElementById("stars");
+for (let i = 0; i < 35; i++) {
+  let star = document.createElement("div");
+  star.className = "star";
+  star.innerHTML = "✨";
+  star.style.left = Math.random() * 100 + "vw";
+  star.style.fontSize = (10 + Math.random() * 20) + "px";
+  star.style.animationDuration = (3 + Math.random() * 4) + "s";
+  stars.appendChild(star);
+}
+</script>
+
+</body>
+</html>
