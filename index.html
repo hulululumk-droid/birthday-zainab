@@ -12,27 +12,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Poppins', system-ui, sans-serif;
+    font-family: 'Poppins', sans-serif;
     overflow: hidden;
   }
 
   .card {
-    width: 320px;
-    min-height: 220px;
+    width: 300px;
+    min-height: 200px;
     background: white;
-    border-radius: 22px;
-    box-shadow: 0 25px 50px rgba(255,79,135,0.35);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 28px;
+    padding: 25px;
     cursor: pointer;
     animation: fadeIn 1s ease;
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.85); }
+    from { opacity: 0; transform: scale(0.8); }
     to { opacity: 1; transform: scale(1); }
   }
 
@@ -41,22 +41,21 @@
     color: #ff4f87;
   }
 
-  h3 { color: #ff6fa3; }
-
   p {
     color: #444;
     font-size: 15px;
-    line-height: 1.65;
+    line-height: 1.6;
   }
 
   .emoji {
-    font-size: 48px;
-    animation: pulse 1.4s infinite;
+    font-size: 45px;
+    animation: pulse 1.5s infinite;
   }
 
   @keyframes pulse {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.25); }
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
   }
 
   .stars {
@@ -68,30 +67,21 @@
   .star {
     position: absolute;
     animation: float 4s linear infinite;
+    opacity: 0.8;
   }
 
   @keyframes float {
     from { transform: translateY(100vh); }
     to { transform: translateY(-10vh); }
   }
-
-  .confetti {
-    position: fixed;
-    top: -10px;
-    font-size: 18px;
-    animation: fall 3s linear forwards;
-  }
-
-  @keyframes fall {
-    to {
-      transform: translateY(110vh) rotate(360deg);
-      opacity: 0;
-    }
-  }
 </style>
 </head>
 
 <body>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4f3b6bfe30.mp3" type="audio/mpeg">
+</audio>
 
 <div class="card" id="card" onclick="nextStep()">
   <div>
@@ -105,76 +95,80 @@
 <script>
 let step = 0;
 const card = document.getElementById("card");
+const music = document.getElementById("bgMusic");
 
 function nextStep() {
-
   if (step === 0) {
+    // First click → start music + suspense hint
+    music.play();
     card.innerHTML = `
       <div>
-        <p>Hmm… aaj kisi ka birthday hai??? 👀</p>
-        <p>Something beautiful is coming 💖</p>
+        <p>Hmm…ajj kisi ki birthday hai 👀</p>
+        <p>Just a little more magic ✨</p>
         <p><b>Click again</b></p>
       </div>`;
   }
 
   else if (step === 1) {
-    launchConfetti();
+    // Second click → more suspense
+    card.innerHTML = `
+      <div>
+        <p>Almost there… 😌</p>
+        <p>One more click for the big surprise 💖</p>
+        <p><b>Click once more</b></p>
+      </div>`;
+  }
+
+  else if (step === 2) {
+    // Third click → Birthday message + Dua
     card.innerHTML = `
       <div>
         <h1>🎉 Happy Birthday 🎉</h1>
         <h2>Waqeel Sahiba 💖</h2>
 
         <p>
-          May your days always be filled with joy,  
-          smiles, and beautiful surprises ✨
+          Today is special because someone incredibly special was born ✨  
+          May your days always be filled with light, laughter, and love 🌸
         </p>
 
-        <p style="font-style:italic;font-size:14px;">
-          May Allah bless you with happiness, peace,  
-          and success in every step 🤍
+        <p style="font-style: italic; font-size:14px;">
+          May Allah bless you with all the happiness this world has to offer,  
+          keep you smiling always, protect your heart,  
+          and grant you success, peace, and beautiful surprises in life 🤍
         </p>
 
-        <h2><i>Click for a little extra… 😋</i></h2>
+        <p>Stay magical. Always. 💫</p>
+
+        <p style="margin-top:15px;"><b>Click for a little extra… 😋</b></p>
       </div>`;
   }
 
-  else if (step === 2) {
+  else if (step === 3) {
+    // Fourth click → Treat message
     card.innerHTML = `
       <div>
         <h2>Cake scene when??? 😋</h2>
-        <h3>Mujhy treat bhi to chahiya</h3>
+        <h3>Mujhy treat bhi to chahiya </h3>
         <p>Same vibes, same magic 💕</p>
+        <p>Hope you smile as much as you make everyone smile ✨</p>
       </div>`;
   }
 
   step++;
 }
 
-// stars
+// stars effect
 const stars = document.getElementById("stars");
-for (let i = 0; i < 40; i++) {
-  let s = document.createElement("div");
-  s.className = "star";
-  s.innerHTML = "✨";
-  s.style.left = Math.random() * 100 + "vw";
-  s.style.fontSize = (10 + Math.random() * 22) + "px";
-  s.style.animationDuration = (3 + Math.random() * 4) + "s";
-  stars.appendChild(s);
-}
-
-// confetti
-function launchConfetti() {
-  for (let i = 0; i < 30; i++) {
-    const c = document.createElement("div");
-    c.className = "confetti";
-    c.innerHTML = ["🎉","💖","✨","🌸"][Math.floor(Math.random()*4)];
-    c.style.left = Math.random() * 100 + "vw";
-    c.style.animationDuration = (2 + Math.random()*2) + "s";
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 3000);
-  }
+for (let i = 0; i < 35; i++) {
+  let star = document.createElement("div");
+  star.className = "star";
+  star.innerHTML = "✨";
+  star.style.left = Math.random() * 100 + "vw";
+  star.style.fontSize = (10 + Math.random() * 20) + "px";
+  star.style.animationDuration = (3 + Math.random() * 4) + "s";
+  stars.appendChild(star);
 }
 </script>
 
 </body>
-</html>
+</html> 
