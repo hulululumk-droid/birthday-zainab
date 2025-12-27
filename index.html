@@ -93,49 +93,22 @@
 
 <body>
 
-<audio id="bgMusic" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4f3b6bfe30.mp3" type="audio/mpeg">
-</audio>
-
-<div class="card" id="card">
+<div class="card" id="card" onclick="nextStep()">
   <div>
-    <div class="emoji">🔊</div>
-    <p><b>Tap to enable sound</b></p>
+    <div class="emoji">💌</div>
+    <p><b>Click me</b></p>
   </div>
 </div>
 
 <div class="stars" id="stars"></div>
 
 <script>
-let step = -1;
+let step = 0;
 const card = document.getElementById("card");
-const music = document.getElementById("bgMusic");
-
-// FIRST CLICK — required by browser
-card.onclick = enableMusic;
-
-function enableMusic() {
-  music.play().then(() => {
-    card.onclick = nextStep;
-    nextStep();
-  }).catch(() => {
-    alert("Please tap again to enable sound 🎵");
-  });
-}
 
 function nextStep() {
-  step++;
 
   if (step === 0) {
-    card.innerHTML = `
-      <div>
-        <div class="emoji">💌</div>
-        <p>Ready for a little magic? ✨</p>
-        <p><b>Click me</b></p>
-      </div>`;
-  }
-
-  else if (step === 1) {
     card.innerHTML = `
       <div>
         <p>Hmm… aaj kisi ka birthday hai??? 👀</p>
@@ -144,7 +117,7 @@ function nextStep() {
       </div>`;
   }
 
-  else if (step === 2) {
+  else if (step === 1) {
     launchConfetti();
     card.innerHTML = `
       <div>
@@ -165,7 +138,7 @@ function nextStep() {
       </div>`;
   }
 
-  else if (step === 3) {
+  else if (step === 2) {
     card.innerHTML = `
       <div>
         <h2>Cake scene when??? 😋</h2>
@@ -173,6 +146,8 @@ function nextStep() {
         <p>Same vibes, same magic 💕</p>
       </div>`;
   }
+
+  step++;
 }
 
 // stars
